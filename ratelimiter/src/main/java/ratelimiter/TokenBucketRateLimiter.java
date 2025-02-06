@@ -53,16 +53,19 @@ public class TokenBucketRateLimiter implements IRateLimiter {
 
     private boolean attemptAcquire() {
         refillTokens();
+        // consume a token
         if (currentTokens > 0) {
             currentTokens--;
             return true;
         }
+        // no tokens available, request cannot proceed
         return false;
     }
 
     private void refillTokens() {
         long now = System.nanoTime();
         double elapsedSeconds = (now - lastRefillTime) / 1e9; // Convert nanos to seconds
+        // tokens are refilled on per-second basis
         double tokensToAdd = elapsedSeconds * getRefillRate();
 
         currentTokens = Math.min(config.getMaxRequests(), currentTokens + tokensToAdd);
@@ -70,6 +73,8 @@ public class TokenBucketRateLimiter implements IRateLimiter {
     }
 
     private double getRefillRate() {
+        // Refill Rate = Max Requests / Time Window in Seconds
+        // This tells how many tokens should be added per second, hence divided by 1000.0
         return config.getMaxRequests() / (config.getWindowSizeInMillis() / 1000.0);
     }
 }
