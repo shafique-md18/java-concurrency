@@ -8,10 +8,10 @@ Problems
 Todo
 -----
 
-1. Thread-Safe Rate Limiter
-2. Custom Thread Pool Implementation
-3. Semaphore Implementation
-4. Cache with Read/Write Locks
-5. Task Scheduler
+1. Task Scheduler
+2. Pub-Sub system
+3. Cache with Read/Write Locks
+4. Custom Thread Pool Implementation
+5. Semaphore Implementation
 6. Dining Philosophers Problem
-7. Pub-Sub system
+

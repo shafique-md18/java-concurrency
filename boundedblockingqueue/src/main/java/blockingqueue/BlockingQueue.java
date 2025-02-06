@@ -4,6 +4,19 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * First Solution (synchronized with wait()/notifyAll()) is simpler, faster, and more efficient for this case.
+ * Since the queue is used with exclusive access for enqueue and dequeue operations, there's no benefit to using read-write locks.
+ * The simplicity of synchronized is effective here and leads to better performance.
+ * <p>
+ * Second Solution (ReentrantReadWriteLock with Condition) is overengineered for this specific problem.
+ * It introduces unnecessary complexity and overhead, particularly because we are not dealing with a situation where multiple readers
+ * and few writers benefit from read-write locks. It is better suited for cases where there are frequent reads and infrequent writes, but this doesn't align well with the bounded blocking queue problem.
+ * <p>
+ * For bounded blocking queues, synchronized with wait() and notifyAll() is the better approach, resulting in cleaner
+ * and more efficient code for the problem at hand.
+ */
+
 public class BlockingQueue<T> implements IBlockingQueue<T> {
     // Should fields be volatile?
     // No need with synchronized methods as they provide happens-before guarantees.
